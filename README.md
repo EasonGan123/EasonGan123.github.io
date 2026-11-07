@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Eason Gan · Portfolio
 
-## Getting Started
+Multi page portfolio built around one idea: **every dot is a person**. One persistent WebGL particle field lives behind every page: it forms the name, previews each section on hover, flies between page titles on navigation, fills the experience timeline, draws the world map, and ends every page with "Let's talk."
 
-First, run the development server:
+## Stack
+
+Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion · GSAP ScrollTrigger · Lenis · OGL (WebGL particles)
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Production check:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build && npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Edit content
 
-## Learn More
+All copy lives in **`content/site.ts`**: hero line, status pill, metrics, projects (card + expanded case study), skills, interests, contact. Wrap a word in `*asterisks*` to render it in Instrument Serif italic. House rule: no em dashes.
 
-To learn more about Next.js, take a look at the following resources:
+Drop your resume at **`public/resume.pdf`** (served at `/resume.pdf`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How the particles work
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `lib/particles/engine.ts`: one OGL `Points` mesh, CPU spring physics (6k dots desktop, 2.5k mobile), cursor repel.
+- `lib/particles/scenes.ts`: target generators. Text is rasterized from the real DOM heading (same font, same position), the map comes from `lib/world-dots.json`, the grid is computed.
+- Scenes are anchored to elements with `data-scene-shape` / `data-scene-driver`. Scroll position decides which pair of scenes is active; between scenes the dots relax into a faint ambient field.
+- The real HTML heading renders first (fast LCP, SEO, no-WebGL fallback) and fades once the dots have formed it.
+- `prefers-reduced-motion`: no smooth scroll, no morphs (static states with a fade), no marquee.
 
-## Deploy on Vercel
+Regenerate the map dots (needs dev deps): `node scripts/gen-world-dots.mjs`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Pages
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`/` home (name + category index with particle previews) · `/projects` and `/projects/[slug]` · `/experience` (timeline) · `/about` (journey map) · `/life`.
+
+## Deploy (GitHub Pages)
+
+Live at **https://easongan123.github.io**.
+
+- Source lives on `main`. The site is a static export (`output: "export"` in `next.config.ts`), built to `out/`.
+- `npm run deploy` builds and force-pushes `out/` to the `gh-pages` branch, which Pages serves.
+- The previous 2022 site is preserved on the `legacy-2022` branch.
+
+Icons and the social preview image are static PNGs in `app/`. Their generators are in `scripts/og-source/` if you want to restyle and regenerate them.
