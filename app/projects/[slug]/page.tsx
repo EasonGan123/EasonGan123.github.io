@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { site, type Project } from "@/content/site";
 import PageHeader from "@/components/PageHeader";
 import ScaleBlock from "@/components/ScaleBlock";
+import Showcase from "@/components/Showcase";
 import { FadeIn } from "@/components/Reveal";
 
 const projects = site.projects as readonly Project[];
@@ -57,6 +58,34 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       />
 
       <div className="container-x">
+        {(p.media || p.link) && (
+          <FadeIn className="mb-14 md:mb-20">
+            {p.media && (
+              <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-ink md:aspect-[21/9]">
+                {p.media.kind === "video" ? (
+                  <video src={p.media.src} poster={p.media.poster} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover" aria-label={p.media.alt} />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={p.media.src} alt={p.media.alt} className="absolute inset-0 h-full w-full object-cover object-top" />
+                )}
+              </div>
+            )}
+            {p.link && (
+              <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+                {p.product && <p className="serif-accent text-[clamp(1.4rem,2.4vw,2rem)] leading-tight">{p.product.tagline}</p>}
+                <a
+                  href={p.link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 items-center gap-2 rounded-full bg-ink px-5 text-sm font-medium text-bg transition-colors duration-300 hover:bg-accent hover:text-white"
+                >
+                  Visit {p.link.label} <span aria-hidden>↗</span>
+                </a>
+              </div>
+            )}
+          </FadeIn>
+        )}
+
         <dl className="grid grid-cols-2 border-t border-line md:grid-cols-4">
           {p.expanded.facts.map((f, k) => (
             <FadeIn key={f.label} delay={k * 0.06} className="border-b border-line py-6 pr-4">
@@ -65,6 +94,22 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             </FadeIn>
           ))}
         </dl>
+
+        {p.showcase && <Showcase s={p.showcase} />}
+
+        {p.product && (
+          <FadeIn className="mt-16 grid gap-6 border-t border-line pt-5 md:mt-24 md:grid-cols-3 md:gap-10">
+            <h2 className="label-mono">The product</h2>
+            <ul className="space-y-0 md:col-span-2">
+              {p.product.points.map((t) => (
+                <li key={t} className="flex gap-4 border-b border-line py-4 text-[17px] leading-snug last:border-b-0">
+                  <span aria-hidden className="mt-[0.45em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </FadeIn>
+        )}
 
         <div className="mt-16 grid gap-12 md:mt-24 md:grid-cols-3 md:gap-10">
           <Block title="Problem" paras={p.expanded.problem} delay={0} />

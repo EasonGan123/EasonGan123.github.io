@@ -2,14 +2,12 @@ import Link from "next/link";
 import { site } from "@/content/site";
 import { MAP_ASPECT } from "@/lib/geo";
 import { Rich } from "@/lib/rich";
-import { spans } from "@/lib/timeline";
 
 /**
  * One screen. The name is a particle shape; hovering a category row
  * re-forms the same dots into a preview of that page.
  */
 export default function HomeHero() {
-  const bars = spans();
   return (
     <section data-scene-driver aria-label="Introduction" className="relative flex min-h-[100svh] flex-col pb-8 pt-20 md:pb-10 md:pt-24">
       <div className="container-x flex justify-end">
@@ -42,16 +40,6 @@ export default function HomeHero() {
               <span data-word>Off the</span> <span data-word className="serif-accent tracking-[-0.03em]">clock.</span>
             </span>
           </div>
-          <div data-preview="experience" data-scene="fill" data-scene-alpha="0.9" className="absolute inset-x-0 bottom-0 top-[8%]">
-            {bars.map((b, i) => (
-              <span
-                key={b.p.id}
-                data-fill
-                className="absolute rounded-sm"
-                style={{ left: `${b.left * 100}%`, width: `${b.width * 100}%`, top: `${i * 19}%`, height: "11%" }}
-              />
-            ))}
-          </div>
         </div>
 
         {/* Captions fade in with each preview (desktop hover only) */}
@@ -61,17 +49,6 @@ export default function HomeHero() {
               <span className="text-accent">●</span> {c.caption}
             </p>
           ))}
-          <div data-caption="experience" className="absolute inset-x-0 bottom-0 top-[calc(2.5rem+8%)]">
-            {bars.map((b, i) => (
-              <span
-                key={b.p.id}
-                className="label-mono absolute -translate-y-full whitespace-nowrap pb-1 text-ink"
-                style={{ left: `${b.left * 100}%`, top: `${i * 19}%` }}
-              >
-                {b.p.name}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
 

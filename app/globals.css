@@ -240,7 +240,6 @@ html.seen .preloader {
   transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
 }
 html[data-previewing="projects"] [data-caption="projects"],
-html[data-previewing="experience"] [data-caption="experience"],
 html[data-previewing="about"] [data-caption="about"],
 html[data-previewing="life"] [data-caption="life"] {
   opacity: 1;

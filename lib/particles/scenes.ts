@@ -133,7 +133,7 @@ export function gridScene(el: HTMLElement, n: number, seed = 3): ScenePoints {
 
 /**
  * Fills every [data-fill] descendant's box with an even dot lattice,
- * dots shared out by area. Used for the experience timeline bars.
+ * dots shared out by area. Currently unused.
  */
 export function fillScene(el: HTMLElement, n: number, seed = 4): ScenePoints {
   const rect = el.getBoundingClientRect();

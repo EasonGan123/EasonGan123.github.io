@@ -3,6 +3,7 @@ import { site } from "@/content/site";
 import PageHeader from "@/components/PageHeader";
 import InterestGlyph from "@/components/InterestGlyph";
 import { FadeIn } from "@/components/Reveal";
+import LifeReel from "@/components/LifeReel";
 
 export const metadata: Metadata = {
   title: "Life",
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 export default function LifePage() {
   return (
     <>
-      <PageHeader index="04" label="Life" title="Off the" serifTail="clock." intro={site.pages.life} />
+      <PageHeader index="03" label="Life" title="Off the" serifTail="clock." intro={site.pages.life} />
+      <LifeReel />
       <section aria-label="Interests" className="container-x pb-10">
         <ul className="grid grid-cols-1 border-l border-t border-line sm:grid-cols-2">
           {site.interests.map((it, i) => (

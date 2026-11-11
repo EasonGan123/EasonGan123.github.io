@@ -95,7 +95,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <style>{`[data-reveal]{opacity:1!important;transform:none!important}.preloader{display:none!important}`}</style>
         </noscript>
       </head>
-      <body>
+      {/* Extensions like Grammarly inject attributes on <body> before hydration. */}
+      <body suppressHydrationWarning>
         <MotionRoot>
           <a
             href="#content"

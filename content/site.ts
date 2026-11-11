@@ -19,7 +19,7 @@ export type Project = {
   name: string;
   role: string;
   period: string;
-  /** For the experience timeline. YYYY-MM; end omitted means ongoing. */
+  /** YYYY-MM; end omitted means ongoing. */
   start: string;
   end?: string;
   group: "Ventures" | "Community" | "Consulting";
@@ -40,6 +40,20 @@ export type Project = {
     facts: { label: string; value: string }[];
   };
   tags: string[];
+  /** Live product link. Shown on the row and the project page. */
+  link?: { href: string; label: string };
+  /** Hover preview + project page hero. Omit to use the abstract dot card. */
+  media?: { kind: "video" | "image"; src: string; poster?: string; alt: string };
+  /** Short product highlights, taken from the live site. */
+  product?: { tagline: string; points: string[] };
+  /** Extra outbound links shown as pills on the row (e.g. Instagram). */
+  socials?: { href: string; label: string }[];
+  /** Channels, brand partners and events. Pickup Games only for now. */
+  showcase?: {
+    channels: { kind: string; href: string; label: string; meta: string; internal?: boolean }[];
+    partners: string[];
+    events: { name: string; date: string; note: string }[];
+  };
 };
 
 export type City = {
@@ -59,19 +73,19 @@ export const site = {
   meta: {
     title: "Eason Gan | Founder, UC Berkeley Haas & Data Science",
     description:
-      "Eason Gan is a founder who builds products people actually use. Co-Founder & CEO of Pickup Games (25,000+ users, zero ad spend). Haas Spieker Program and Data Science at UC Berkeley.",
+      "Eason Gan is a founder who builds products people actually use. Co-Founder & CEO of Pickup Games (25,000+ users, zero ad spend). Business Administration (Haas Spieker) and Data Science at UC Berkeley.",
   },
 
   status: {
-    show: true,
+    show: false,
     text: "Open to Summer 2027 internships",
   },
 
   hero: {
     // Words wrapped in *asterisks* render in Instrument Serif italic.
-    oneLiner: "I build products people *show up* for.",
-    proof: "25,000+ users, zero ad spend.",
-    subLine: "Founder · Haas Spieker + Data Science @ UC Berkeley",
+    oneLiner: "Building what *matters*.",
+    proof: "From ideation to launch.",
+    subLine: "Founder · Business Administration (Haas Spieker) + Data Science @ UC Berkeley",
     ctaWork: "View work",
     ctaResume: "Resume ↓",
   },
@@ -183,6 +197,31 @@ export const site = {
         ],
       },
       tags: ["Marketplace", "Growth", "Partnerships"],
+      link: { href: "https://www.pickupgames.app/", label: "pickupgames.app" },
+      media: { kind: "video", src: "/projects/pickup-games.mp4", poster: "/projects/pickup-games.jpg", alt: "Pickup Games tournament on an outdoor court" },
+      product: {
+        tagline: "Find, join or host pickup games.",
+        points: [
+          "Live map of nearby games with spots left, kick off time and skill level",
+          "Join in one tap, or host your own",
+          "Verified player profiles with ratings and games played",
+          "15+ sports, 50+ weekly games, rated 4.7 by players",
+        ],
+      },
+      socials: [{ href: "https://www.instagram.com/pickupgames.app/", label: "@pickupgames.app" }],
+      showcase: {
+        channels: [
+          { kind: "Instagram", href: "https://www.instagram.com/pickupgames.app/", label: "@pickupgames.app", meta: "6.9K followers · 20M+ views via creators" },
+          { kind: "Website", href: "https://www.pickupgames.app/", label: "pickupgames.app", meta: "Find, join or host a game" },
+          { kind: "Nonprofit", href: "/projects/pickup-for-good", label: "Pickup For Good", meta: "Youth sports, funded by every event", internal: true },
+        ],
+        partners: ["Red Bull", "Li-Ning", "Kelme", "Passion24"],
+        events: [
+          { name: "pickup × Red Bull Tournament", date: "Hong Kong", note: "One pitch, back to back games, the whole community out under the lights." },
+          { name: "Pickup For Good Runathon", date: "Mar 2026", note: "Running for health, for fun and for impact." },
+          { name: "Sports for a Cause", date: "Dec 2025", note: "Charity games raising money for causes across Hong Kong." },
+        ],
+      },
     },
     {
       id: "handsonexams",
@@ -220,6 +259,16 @@ export const site = {
         ],
       },
       tags: ["EdTech", "AI tools", "Product iteration"],
+      link: { href: "https://www.handsonexams.com/", label: "handsonexams.com" },
+      media: { kind: "image", src: "/projects/handsonexams.jpg", alt: "HandsOnExams homepage" },
+      product: {
+        tagline: "AI revision tools and resources, all in one place.",
+        points: [
+          "Past papers, curated notes and a tutor network",
+          "AI Quizzer, Summariser, Flashcards and Essay Grader built from your own material",
+          "IGCSE, A Level and IB across Maths, Sciences and Economics",
+        ],
+      },
     },
     {
       id: "tourvista",
@@ -333,14 +382,23 @@ export const site = {
         ],
       },
       tags: ["Nonprofit", "Community", "Partnerships"],
+      link: { href: "https://www.pickupgames.app/pickup-for-good", label: "pickupgames.app/pickup-for-good" },
+      media: { kind: "image", src: "/projects/pickup-for-good.jpg", alt: "Pickup For Good youth clinics" },
+      product: {
+        tagline: "Every child deserves the joy of sports.",
+        points: [
+          "Equipment, coaching and safe spaces for underprivileged youth",
+          "Monthly runathons, charity games and clinics",
+          "A share of every Pickup Games event funds the program",
+        ],
+      },
     },
   ] satisfies Project[],
 
   /** Intro line under each page title. */
   pages: {
     projects: "Five things I built or shipped. Each one started with a real problem and ended with a number I can point to.",
-    experience: "Five roles since 2023, three of them running in parallel today. Every bar below is filled with dots; click one for the full story.",
-    life: "Reps, discipline, reading conditions, and taking the long way up.",
+    life: "Live, laugh, love.",
   },
 
   /** Homepage index. Each row previews its page as a particle shape on hover. */
@@ -351,13 +409,6 @@ export const site = {
       label: "Projects",
       teaser: "5 things I built, 25,000+ people who use them",
       caption: "25,000+ users on Pickup Games. Zero ad spend.",
-    },
-    {
-      key: "experience",
-      href: "/experience",
-      label: "Experience",
-      teaser: "Founder, consultant, since 2023",
-      caption: "5 roles since 2023. 3 running today.",
     },
     {
       key: "about",
@@ -382,6 +433,20 @@ export const site = {
   },
 
   skills: ["Python", "SQL", "React", "Excel", "PowerPoint", "RAG", "Reinforcement Learning"],
+
+  life: {
+    reelTitle: "Where I go to",
+    reelTail: "reset.",
+    // Drop photos in public/life/ and set src, e.g. "/life/soccer.jpg".
+    // shape: "portrait" | "landscape" | "square". No src shows a placeholder.
+    frames: [
+      { src: "/life/dawn-patrol.jpg", alt: "Eason at a night summit above Victoria Harbour", caption: "Dawn patrol", place: "Hong Kong", interest: "Hiking", coords: "22.27°N 114.15°E", shape: "portrait", position: "center" },
+      { src: "/life/inter-milan.jpg", alt: "Inter Milan Academy players at the Suning Youth Development Centre", caption: "Inter Milan Academy", place: "Milan", interest: "Soccer", coords: "45.48°N 9.12°E", shape: "landscape", position: "center" },
+      { src: "/life/surfing.jpg", alt: "Picking a board before a surf session", caption: "Choosing a board", place: "Surfing", interest: "Surfing", coords: "22.24°N 114.26°E", shape: "portrait", position: "center 40%" },
+      { src: "/life/pickup-community.jpg", alt: "Pickup Games community session on a Hong Kong pitch", caption: "Pickup, game day", place: "Hong Kong", interest: "Soccer", coords: "22.27°N 114.18°E", shape: "square", position: "center 70%" },
+      { src: "/life/westminster-abbey.jpg", alt: "Eason with friends outside Westminster Abbey", caption: "Westminster Abbey", place: "London", interest: "Hiking", coords: "51.50°N 0.13°W", shape: "portrait", position: "center 60%" },
+    ],
+  },
 
   interests: [
     { name: "Soccer", note: "Inter Milan Academy" },

@@ -73,7 +73,7 @@ export default function Footer() {
             </li>
             <li>
               <Magnetic>
-                <a href={site.contact.resume} download className={pill}>
+                <a href={site.contact.resume} download="Eason Gan Resume.pdf" className={pill}>
                   Resume ↓
                 </a>
               </Magnetic>

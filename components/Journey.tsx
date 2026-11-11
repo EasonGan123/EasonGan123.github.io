@@ -100,7 +100,7 @@ export default function Journey() {
     <section ref={section} aria-labelledby="journey-title" className="relative h-[260vh]">
       <div data-scene-driver className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden">
         <div className="container-x">
-          <SectionLabel index="03" label="About" />
+          <SectionLabel index="02" label="About" />
           <div className="grid-12 mt-6 gap-y-4 md:mt-8">
             <h1
               id="journey-title"

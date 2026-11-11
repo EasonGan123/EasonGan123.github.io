@@ -42,9 +42,23 @@ export default function Nav() {
         }`}
       >
         <nav aria-label="Primary" className="container-x flex h-16 items-center justify-between gap-4">
-          <Link href="/" className="text-[15px] font-semibold tracking-[-0.04em]" aria-label={`${site.monogram}, ${site.name}, home`}>
-            {site.monogram}
-          </Link>
+          {pathname === "/" ? (
+            <Link href="/" className="text-[15px] font-semibold tracking-[-0.04em]" aria-label={`${site.monogram}, ${site.name}, home`}>
+              {site.monogram}
+            </Link>
+          ) : (
+            <Link
+              href="/"
+              className="group inline-flex h-9 shrink-0 items-center gap-2 rounded-full border border-ink px-3.5 text-[13px] font-medium transition-colors duration-300 hover:bg-ink hover:text-bg sm:px-4 sm:text-sm"
+            >
+              <span aria-hidden className="transition-transform duration-300 group-hover:-translate-x-0.5">
+                ←
+              </span>
+              <span>
+                <span className="hidden sm:inline">Back to </span>home
+              </span>
+            </Link>
+          )}
           <div className="flex items-center gap-4 md:gap-8">
             <LocalTime className="hidden lg:inline" />
             <ul className="flex items-center gap-3 text-[13px] sm:gap-5 sm:text-sm">
