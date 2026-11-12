@@ -1,5 +1,7 @@
 # Eason Gan · Portfolio
 
+**Live site: [easongan123.github.io](https://easongan123.github.io)**
+
 Multi page portfolio built around one idea: **every dot is a person**. One persistent WebGL particle field lives behind every page: it forms the name, previews each section on hover, flies between page titles on navigation, fills the experience timeline, draws the world map, and ends every page with "Let's talk."
 
 ## Stack
@@ -37,7 +39,7 @@ Regenerate the map dots (needs dev deps): `node scripts/gen-world-dots.mjs`.
 
 ## Pages
 
-`/` home (name + category index with particle previews) · `/projects` and `/projects/[slug]` · `/experience` (timeline) · `/about` (journey map) · `/life`.
+`/` home (name + category index with particle previews) · `/projects` and `/projects/[slug]` · `/about` (journey map) · `/life`.
 
 ## Deploy (GitHub Pages)
 
